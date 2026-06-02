@@ -1,15 +1,23 @@
-# app.py
-from flask import Flask
-app = Flask(__name__)  # Cria a instância da aplicação
+from flask import Flask, jsonify
+import random
+
+app = Flask(__name__)
+
+joke_list = [
+    "Por que o bombeiro não gosta de andar? <br> Porque ele socorre",
+    "Sabe como chama a sorveteria do michel Telo? <br> Ice te pego.",
+    "Porque o espanador não luta karate? <br> Porque ele luta capoeira",
+]
 
 
-@app.route("/")  # Cria uma rota, para a raiz do projeto. (GET por padrão)
-def hello_world():  # Metodo a ser executado ao navegar
-    return 'Hello World!'
+@app.route("/api/joke")
+def joke():
+    return jsonify({"joke": random.choice(joke_list)})
 
 
-# Verifica se o script está sendo executado diretamente e executa a aplicação
-if __name__ == '__main__':
-    #  debug = True, reinicia automaticamente a cada mudança de arquivo
-    #  mude a porta, caso ela estiver em uso
-    app.run(debug=True, host='0.0.0.0', port=8000)
+def start_server(host: str = "0.0.0.0", port: int = 8000):
+    app.run(debug=True, host=host, port=port)
+
+
+if __name__ == "__main__":
+    start_server()
