@@ -10,7 +10,7 @@ class AbstractModel:
 
     def save(self):
         result = self._collection.insert_one(self.data)
-        insert_document = self._collection.find_one(
+        inserted_document = self._collection.find_one(
             {"_id": result.inserted_id}
         )
         self.data = inserted_document
